@@ -1,6 +1,8 @@
 import Bullet from "./game/character/Bullet.js";
+import Map1 from "./game/map/map1.js";
 
 var bullet = new Bullet()
+var map1 = new Map1()
 
 var config = {
     type: Phaser.AUTO,
@@ -8,8 +10,8 @@ var config = {
     height: 800,
     backgroundColor: 'rgb(50,0,150)',
     physics: {
-        default: 'arcade',
-        arcade: { gravity: { y: 400 }, debug: true }
+        default: 'matter',
+        matter: { gravity: { y: 0.4 }, debug: true }
     },
     audio: {
         noAudio: true
