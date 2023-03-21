@@ -1,16 +1,18 @@
-export default class Bullet extends Phaser.Scene{
+import Player from "./Player.js";
+
+class Scene extends Phaser.Scene{
+    player;
+    cursors;
     constructor(){
         super();
-        this.player;
-        this.cursors;
     }
 
     preload(){
         this.load.image('bullet', "images/character/ball2.png");
         this.load.atlas('flares', 'images/particles/flares.png', 'images/particles/flares.json');
         this.load.image('dirt', 'images/block/dirt.png')
-        this.load.tilemapTiledJSON('map', 'game/map/maptile.json');
-        this.load.image('blocktiles', 'images/tile.png');
+        this.load.tilemapTiledJSON('map', 'images/map/maptile.json');
+        this.load.image('blocktiles', 'images/map/tile.png');
     }
 
     create(){
@@ -36,7 +38,7 @@ export default class Bullet extends Phaser.Scene{
         //     blendMode: 'ADD'
         // });
 
-        this.player = this.matter.add.sprite(500, 300, 'bullet');
+        this.player = new Player(this.matter.add.sprite(500, 300, 'bullet'), Phaser.Physics.Matter.Matter);
     }
 
     update(){
@@ -56,3 +58,5 @@ export default class Bullet extends Phaser.Scene{
         // }
     }
 }
+
+export default Scene;

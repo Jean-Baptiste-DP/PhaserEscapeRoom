@@ -1,8 +1,6 @@
-import Bullet from "./game/character/Bullet.js";
-import Map1 from "./game/map/map1.js";
+import Scene from "./game/Scene.js";
 
-var bullet = new Bullet()
-var map1 = new Map1()
+const scene = new Scene();
 
 var config = {
     type: Phaser.AUTO,
@@ -16,7 +14,7 @@ var config = {
     audio: {
         noAudio: true
     },
-    scene: [bullet]
+    scene: [scene]
 };
 
 var game = new Phaser.Game(config);
