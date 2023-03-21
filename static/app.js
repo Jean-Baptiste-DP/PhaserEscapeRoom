@@ -1,6 +1,6 @@
-import Bullet from "./game/character/Bullet.js";
+import Scene from "./game/Scene.js";
 
-var bullet = new Bullet()
+const scene = new Scene();
 
 var config = {
     type: Phaser.AUTO,
@@ -8,13 +8,13 @@ var config = {
     height: 800,
     backgroundColor: 'rgb(50,0,150)',
     physics: {
-        default: 'arcade',
-        arcade: { gravity: { y: 400 }, debug: true }
+        default: 'matter',
+        matter: { gravity: { y: 0.4 }, debug: true }
     },
     audio: {
         noAudio: true
     },
-    scene: [bullet]
+    scene: [scene]
 };
 
 var game = new Phaser.Game(config);
