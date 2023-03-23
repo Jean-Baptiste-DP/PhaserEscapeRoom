@@ -19,7 +19,7 @@ app.use('/', express.static('./static'))
   
 app.listen(APP_PORT, (error) =>{
     if(!error)
-        console.log("Server is Successfully Running, and App is listening on port "+ APP_PORT) 
+        console.log("running : " +APP_URL) 
     else 
         console.log("Error occurred, server can't start", error);
     }

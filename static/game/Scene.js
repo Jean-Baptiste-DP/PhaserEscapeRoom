@@ -42,20 +42,7 @@ class Scene extends Phaser.Scene{
     }
 
     update(){
-        // this.player.setVelocityX(0);
-
-        // if (this.cursors.left.isDown)
-        // {
-        //     this.player.setVelocityX(-70);
-        // }
-        // else if (this.cursors.right.isDown)
-        // {
-        //     this.player.setVelocityX(70);
-        // }
-        // if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.player.body.onFloor())
-        // {
-        //     this.player.body.setVelocityY(-10000);
-        // }
+        this.player.move(this.cursors)
     }
 }
 
