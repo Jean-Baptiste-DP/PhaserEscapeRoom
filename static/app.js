@@ -8,8 +8,12 @@ var config = {
     height: 800,
     backgroundColor: 'rgb(50,0,150)',
     physics: {
-        default: 'matter',
-        matter: { gravity: { y: 0.4 }, debug: true }
+        default: "matter",
+        matter: { gravity: { y: 0.4 }, debug: true },
+        arcade: {
+            debug: true,
+            gravity: { y: 200 }
+        },
     },
     audio: {
         noAudio: true
