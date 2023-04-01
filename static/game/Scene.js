@@ -8,7 +8,7 @@ class Scene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("bullet", "images/character/ball2.png");
+        this.load.spritesheet("player", "images/character/players.png", { frameWidth: 40, frameHeight: 50 })
         this.load.image("transparency", "images/character/transparent.png");
         this.load.atlas(
             "flares",
@@ -18,13 +18,17 @@ class Scene extends Phaser.Scene {
         this.load.image("dirt", "images/block/dirt.png");
         this.load.tilemapTiledJSON("map", "images/map/maptile.json");
         this.load.image("blocktiles", "images/map/tile.png");
+        this.load.image("decorations", "images/map/decors.png")
     }
 
     create() {
         const map = this.make.tilemap({ key: "map" });
-        const tileset = map.addTilesetImage("blocktiles");
-        const BackgroundLayer = map.createLayer("BackgroundLayer", tileset);
-        const Groundlayer = map.createLayer("GroundLayer", tileset);
+        const blocktileset = map.addTilesetImage("blocktiles");
+        const decorations = map.addTilesetImage("decorations");
+        const BackgroundLayer = map.createLayer("BackgroundLayer", blocktileset);
+        map.createLayer("DecorationLayer", decorations)
+        // const DecorationsLayer = map.createLayer("Decors", decorations)
+        const Groundlayer = map.createLayer("GroundLayer", blocktileset);
 
         map.setCollisionByProperty({ collides: true });
         this.matter.world.convertTilemapLayer(Groundlayer);
