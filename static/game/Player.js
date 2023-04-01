@@ -208,11 +208,11 @@ export default class Player {
         if (cursor.up.isDown && this.contact["bottom"]) {
             // from floor
             this.sprite.setVelocityY(-this.speed.jump);
-        } else if (cursor.up.isDown && this.contact["left"]) {
+        } else if((cursor.up.isDown || cursor.right.isDown) && this.contact["left"] && !this.contact["bottom"]){
             // from wall left
             this.sprite.setVelocityY(-this.speed.jump);
             this.sprite.setVelocityX(this.speed.maxJump);
-        } else if (cursor.up.isDown && this.contact["right"]) {
+        } else if ((cursor.up.isDown || cursor.left.isDown) && this.contact["right"] && !this.contact["bottom"]) {
             // from wall right
             this.sprite.setVelocityY(-this.speed.jump);
             this.sprite.setVelocityX(-this.speed.maxJump);
