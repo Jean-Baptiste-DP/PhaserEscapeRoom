@@ -17,7 +17,7 @@ export default class Player {
     constructor(scene, mM) {
         const positionX = 300;
         const positionY = 300;
-        this.sprite = scene.matter.add.sprite(positionX, positionY, "bullet");
+        this.sprite = scene.matter.add.sprite(positionX, positionY, "player", 0);
         this.touching = {
             top: false,
             right: false,
