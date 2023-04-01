@@ -1,11 +1,3 @@
-const angleToPosition = ["bottom", "left", "top", "right"];
-const PositiontoAngle = {
-    bottom: 0,
-    left: 1,
-    top: 2,
-    right: 3,
-};
-
 export default class Player {
     sprite;
     sensor;
@@ -15,7 +7,7 @@ export default class Player {
     speed;
     reactivity;
     constructor(scene, mM) {
-        const positionX = 300;
+        const positionX = 300; // initial position of the player
         const positionY = 300;
         this.sprite = scene.matter.add.sprite(
             positionX,
@@ -25,6 +17,7 @@ export default class Player {
         );
 
         scene.anims.create({
+            // allow animation of the player when moving right/left - it can be animated doing "this.sprite.anims.play("right", true)"
             key: "left",
             frames: scene.anims.generateFrameNumbers("player", {
                 start: 0,
@@ -53,18 +46,21 @@ export default class Player {
         });
 
         this.touching = {
+            // register when the player touch a block
             top: false,
             right: false,
             bottom: false,
             left: false,
         };
         this.contact = {
+            // remember the position of the touched block
             top: false,
             right: false,
             bottom: false,
             left: false,
         };
         this.sensor = {
+            // game part that enter in interaction with block to know what the player is touching
             top: null,
             right: null,
             bottom: null,
@@ -72,14 +68,15 @@ export default class Player {
         };
 
         this.speed = {
-            jump: 6,
-            run: 4,
-            moveInJump: 1,
-            maxJump: 2,
+            jump: 6, // high of jump
+            run: 4, // speed while touching floor
+            moveInJump: 1, // minimum seed while jumping
+            maxJump: 2, //max speed while jumping
         };
 
-        this.reactivity = 4;
+        this.reactivity = 4; // if =1 the player change speed instantly, the higher this value is, the more time it take to change speed
 
+        // initialisation of the player body and sensors
         const h = this.sprite.height;
         const w = this.sprite.width;
 
@@ -208,35 +205,22 @@ export default class Player {
         if (cursor.up.isDown && this.contact["bottom"]) {
             // from floor
             this.sprite.setVelocityY(-this.speed.jump);
-        } else if((cursor.up.isDown || cursor.right.isDown) && this.contact["left"] && !this.contact["bottom"]){
+        } else if (
+            (cursor.up.isDown || cursor.right.isDown) &&
+            this.contact["left"] &&
+            !this.contact["bottom"]
+        ) {
             // from wall left
             this.sprite.setVelocityY(-this.speed.jump);
             this.sprite.setVelocityX(this.speed.maxJump);
-        } else if ((cursor.up.isDown || cursor.left.isDown) && this.contact["right"] && !this.contact["bottom"]) {
+        } else if (
+            (cursor.up.isDown || cursor.left.isDown) &&
+            this.contact["right"] &&
+            !this.contact["bottom"]
+        ) {
             // from wall right
             this.sprite.setVelocityY(-this.speed.jump);
             this.sprite.setVelocityX(-this.speed.maxJump);
         }
-
-        // console.log(this.sprite.angle)
-        // this.sensor.body.setX(this.sprite.x)
-        // this.sensor.body.setY(this.sprite.y)
     }
 }
-
-const getMethods = (obj) => {
-    let properties = new Set();
-    let currentObj = obj;
-    do {
-        Object.getOwnPropertyNames(currentObj).map((item) =>
-            properties.add(item)
-        );
-    } while ((currentObj = Object.getPrototypeOf(currentObj)));
-    return [...properties.keys()].filter(
-        (item) => typeof obj[item] === "function"
-    );
-};
-
-const getAttributes = (obj) => {
-    return Object.getOwnPropertyNames(obj);
-};
