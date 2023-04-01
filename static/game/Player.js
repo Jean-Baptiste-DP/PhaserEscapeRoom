@@ -17,7 +17,41 @@ export default class Player {
     constructor(scene, mM) {
         const positionX = 300;
         const positionY = 300;
-        this.sprite = scene.matter.add.sprite(positionX, positionY, "player", 0);
+        this.sprite = scene.matter.add.sprite(
+            positionX,
+            positionY,
+            "player",
+            3
+        );
+
+        scene.anims.create({
+            key: "left",
+            frames: scene.anims.generateFrameNumbers("player", {
+                start: 0,
+                end: 2,
+            }),
+            frameRate: 10,
+            repeat: -1,
+        });
+        scene.anims.create({
+            key: "right",
+            frames: scene.anims.generateFrameNumbers("player", {
+                start: 4,
+                end: 6,
+            }),
+            frameRate: 10,
+            repeat: -1,
+        });
+        scene.anims.create({
+            key: "stop",
+            frames: scene.anims.generateFrameNumbers("player", {
+                start: 3,
+                end: 3,
+            }),
+            frameRate: 10,
+            repeat: -1,
+        });
+
         this.touching = {
             top: false,
             right: false,
@@ -49,21 +83,29 @@ export default class Player {
         const h = this.sprite.height;
         const w = this.sprite.width;
 
-        const playerBody = mM.Bodies.circle(0, 0, h / 2);
+        const playerBody = mM.Bodies.rectangle(w / 2, h / 2, w * 0.75, h, {
+            chamfer: { radius: 10 },
+        });
 
-        this.sensor.bottom = mM.Bodies.rectangle(0, h / 2, 6, 3, {
+        this.sensor.bottom = mM.Bodies.rectangle(w / 2, h, w / 2, 5, {
             isSensor: true,
             label: "bottom",
         });
-        this.sensor.top = mM.Bodies.rectangle(0, -h / 2, 6, 3, {
+        this.sensor.top = mM.Bodies.rectangle(w / 2, 0, w / 2, 5, {
             isSensor: true,
             label: "top",
         });
-        this.sensor.right = mM.Bodies.rectangle(w / 2, 0, 3, 6, {
-            isSensor: true,
-            label: "right",
-        });
-        this.sensor.left = mM.Bodies.rectangle(-w / 2, 0, 3, 6, {
+        this.sensor.right = mM.Bodies.rectangle(
+            (7 * w) / 8,
+            h / 2,
+            5,
+            (3 * h) / 4,
+            {
+                isSensor: true,
+                label: "right",
+            }
+        );
+        this.sensor.left = mM.Bodies.rectangle(w / 8, h / 2, 5, (3 * h) / 4, {
             isSensor: true,
             label: "left",
         });
@@ -152,6 +194,14 @@ export default class Player {
                         this.reactivity;
                 this.sprite.setVelocityX(effectiveSpeedX);
             }
+        }
+
+        if (this.sprite.body.velocity.x >= 0.9) {
+            this.sprite.anims.play("right", true);
+        } else if (this.sprite.body.velocity.x <= -0.9) {
+            this.sprite.anims.play("left", true);
+        } else {
+            this.sprite.anims.play("stop", true);
         }
 
         // jump

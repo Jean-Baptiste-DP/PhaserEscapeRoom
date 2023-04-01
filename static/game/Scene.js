@@ -8,7 +8,7 @@ class Scene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.spritesheet("player", "images/character/player.png", { frameWidth: 30, frameHeight: 30 })
+        this.load.spritesheet("player", "images/character/players.png", { frameWidth: 40, frameHeight: 50 })
         this.load.image("transparency", "images/character/transparent.png");
         this.load.atlas(
             "flares",
